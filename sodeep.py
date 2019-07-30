@@ -56,7 +56,7 @@ class RankHardLoss(torch.nn.Module):
 
         hard_neg_rank = sorted_rank[:, :self.nmax]
 
-        loss = torch.sum(torch.clamp(-hard_neg_rank + (1.0 / (scores.size(1)) + diag).view(-1, 1).expand_as(hard_neg_rank), min=0))
+        loss = torch.sum(torch.clamp(-hard_neg_rank + (self.margin + diag).view(-1, 1).expand_as(hard_neg_rank), min=0))
 
         return loss
 

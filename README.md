@@ -91,6 +91,32 @@ For stability reason it might be necessary to use the proposed loss in combinati
 
 On some regression task we noticed that initialization with an L1 loss for a couple of epochs was required before using the SpearmanLoss.
 
+## Replicating experiments
+
+To reproduce the results on Cross-modal Retrieval we start from the model from the paper [Finding beans in burgers: Deep semantic-visual embedding with localization](http://openaccess.thecvf.com/content_cvpr_2018/CameraReady/3272.pdf) the code is available [here.](https://github.com/technicolor-research/dsve-loc).
+
+We replace the hard negative triplet loss by our sodeep ranking loss as follow:
+
+```python
+from sodeep import RankHardLoss
+
+criterion = RankHardLoss()
+```
+
+We also change the following hyper-parameters:
+
+* batch_size = 100
+* Preprocessing image resize:
+	* train: 350
+	* validation: 350
+	* test: 525
+
+During testing the data are shuffled, add the following line and the end of init function of CocoCaptionsRV:
+
+```python
+random.shuffle(self.content)
+```
+
 ## Reference
 
 If you found this code useful, please cite the following paper:
